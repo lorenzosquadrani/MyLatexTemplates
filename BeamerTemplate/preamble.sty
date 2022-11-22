@@ -1,0 +1,19 @@
+% PACKAGES
+\usepackage[utf8]{inputenc}
+\usepackage{hyperref}
+\usepackage{tikz}
+
+% ROUNDED IMAGES
+\newsavebox{\picbox}
+\newcommand{\cutpic}[3]{
+  \savebox{\picbox}{\includegraphics[width=#2]{#3}}
+  \tikz\node [draw, rounded corners=#1, line width=4pt,
+    color=white, minimum width=\wd\picbox,
+    minimum height=\ht\picbox, path picture={
+      \node at (path picture bounding box.center) {
+        \usebox{\picbox}};
+    }] {};}
+
+% CUSTOM FILLABLE FORMS
+\renewcommand\LayoutTextField[2]{%
+               \raisebox{-3.2pt}{\tikz[overlay]\draw[dashed](0,-0.2\dp\strutbox)--++(\csname Fld@width\endcsname,0pt);#2}}
